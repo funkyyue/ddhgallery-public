@@ -155,17 +155,6 @@ function setupEventListeners() {
         });
     });
 
-    // Gallery filters (old filter buttons)
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const filter = this.getAttribute('data-filter');
-            filterGallery(filter);
-            
-            // Update active filter button
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
 
     // Search input
     if (searchInput) {
