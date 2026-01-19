@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Gallery Item - DDH Gallery</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><a href="index.html" style="text-decoration: none; color: inherit;">DDH Gallery</a></h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#gallery" class="nav-link">Gallery</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+                <a href="#" class="nav-link upload-btn active" id="upload-nav-link">Upload</a>
+                <div class="user-menu" id="user-menu" style="display: none;">
+                    <div class="user-dropdown">
+                        <button class="user-dropdown-btn" id="user-dropdown-btn">
+                            <span id="user-name">Welcome, User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-dropdown-menu" id="user-dropdown-menu">
+                            <a href="profile.html" class="dropdown-item">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                            <a href="upload.html" class="dropdown-item active">
+                                <i class="fas fa-upload"></i> Upload
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="signout-link">
+                                <i class="fas fa-sign-out-alt"></i> Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <a href="index.html" class="nav-link" id="auth-link">Sign In</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Upload Content -->
+    <div class="upload-container">
+        <div class="container">
+            <div class="upload-header">
+                <h1>Upload Gallery Item</h1>
+                <p>Share your chip design and research with the community</p>
+            </div>
+
+            <!-- Upload Instructions -->
+            <div class="upload-instructions">
+                <div class="instructions-card">
+                    <h3><i class="fas fa-info-circle"></i> Important Information</h3>
+                    <div class="instructions-content">
+                        <div class="instruction-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Admin Approval Required:</strong>
+                                <p>After submitting your upload, you need to wait for admin approval before your gallery item will appear publicly. All submissions are initially hidden and require review.</p>
+                            </div>
+                        </div>
+                        <div class="instruction-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Questions or Issues:</strong>
+                                <p>Please <a href="index.html#contact" class="contact-link">contact the admins</a> if you have any questions about the upload process or need assistance.</p>
+                            </div>
+                        </div>
+                        <div class="instruction-item">
+                            <i class="fas fa-edit"></i>
+                            <div>
+                                <strong>Edit Anytime:</strong>
+                                <p>You can modify your descriptions and other details anytime after uploading through your profile page.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="success-message" style="display: none;">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Upload Successful!</h2>
+                <p>Your gallery item has been uploaded successfully.</p>
+                <div class="success-actions">
+                    <a href="profile.html" class="btn btn-primary">View Profile</a>
+                    <a href="index.html#gallery" class="btn btn-secondary">View Gallery</a>
+                </div>
+            </div>
+
+            <!-- Upload Form -->
+            <div class="upload-form-container" id="upload-form-container">
+                <form class="upload-form" id="upload-form">
+                    <div class="form-section">
+                        <h3>Basic Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="item-title">
+                                    <i class="fas fa-heading"></i> Title *
+                                </label>
+                                <input type="text" id="item-title" name="title" required 
+                                       placeholder="Enter chip title">
+                            </div>
+                            <div class="form-group">
+                                <label for="item-author">
+                                    <i class="fas fa-user"></i> Corresponding Author *
+                                </label>
+                                <input type="text" id="item-author" name="correspondingAuthor" required 
+                                       placeholder="Enter corresponding author name">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="item-description">
+                                <i class="fas fa-align-left"></i> Description
+                            </label>
+                            <textarea id="item-description" name="description" rows="3" 
+                                      placeholder="Describe your chip design and its features"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="item-authors">
+                                <i class="fas fa-users"></i> Full Author List
+                            </label>
+                            <textarea id="item-authors" name="fullAuthorList" rows="2" 
+                                      placeholder="Enter all authors (e.g., Dr. John Smith, Prof. Jane Doe, Dr. Bob Johnson)"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Publication Details</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="item-type">
+                                    <i class="fas fa-file-alt"></i> Publication Type *
+                                </label>
+                                <select id="item-type" name="publicationType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="conference">Conference</option>
+                                    <option value="journal">Journal</option>
+                                    <option value="arxiv">ArXiv</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="item-year">
+                                    <i class="fas fa-calendar"></i> Publication Year *
+                                </label>
+                                <input type="number" id="item-year" name="publicationYear" required 
+                                       min="1900" max="2030" value="2024">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="item-link">
+                                <i class="fas fa-link"></i> Publication Link *
+                            </label>
+                            <input type="url" id="item-link" name="publicationLink" required 
+                                   placeholder="https://doi.org/10.1000/example">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="item-publication">
+                                <i class="fas fa-book"></i> Publication Title
+                            </label>
+                            <input type="text" id="item-publication" name="publicationTitle" 
+                                   placeholder="Enter publication title">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Chip Image</h3>
+                        <div class="upload-area" id="upload-area">
+                            <input type="file" id="chip-image" name="chipImage" accept="image/*" hidden>
+                            <div class="upload-content" id="upload-content">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h4>Upload Chip Image</h4>
+                                <p>Click to select or drag and drop your image here</p>
+                                <span class="file-info">PNG, JPG up to 10MB</span>
+                            </div>
+                            <div class="image-preview" id="image-preview" style="display: none;">
+                                <img id="preview-img" src="" alt="Preview">
+                                <div class="preview-info">
+                                    <span id="file-name"></span>
+                                    <button type="button" class="remove-image" id="remove-image">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Additional Options</h3>
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="item-featured" name="featured">
+                                <span class="checkmark"></span>
+                                <i class="fas fa-star"></i>
+                                Featured Item
+                                <small>(Admin only - will be ignored for regular users)</small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-upload">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submit-upload">
+                            <i class="fas fa-upload"></i> Upload Gallery Item
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 DDH Gallery. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/upload.js"></script>
+</body>
+</html>
