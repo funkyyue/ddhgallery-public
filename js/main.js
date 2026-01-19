@@ -194,6 +194,15 @@ function setupEventListeners() {
     if (submissionForm) {
         submissionForm.addEventListener('submit', handleSubmissionSubmit);
     }
+
+    // File upload handling
+    const fileInput = document.getElementById('chip-image');
+    const fileLabel = document.querySelector('.file-upload-label');
+    const fileText = document.getElementById('file-upload-text');
+    
+    if (fileInput && fileLabel && fileText) {
+        fileInput.addEventListener('change', handleFileUpload);
+    }
 }
 
 function toggleMobileNav() {
@@ -381,11 +390,94 @@ function handleContactSubmit(e) {
     }, 1500);
 }
 
+function handleFileUpload(e) {
+    const file = e.target.files[0];
+    const fileLabel = document.querySelector('.file-upload-label');
+    const fileText = document.getElementById('file-upload-text');
+    
+    if (!file) {
+        resetFileUpload();
+        return;
+    }
+    
+    // Validate file type
+    if (!file.type.match(/^image\/jpe?g$/i)) {
+        showNotification('Please select a JPEG image file only.', 'error');
+        resetFileUpload();
+        return;
+    }
+    
+    // Validate file size (10MB = 10 * 1024 * 1024 bytes)
+    const maxSize = 10 * 1024 * 1024;
+    if (file.size > maxSize) {
+        showNotification('File size must be less than 10MB.', 'error');
+        resetFileUpload();
+        return;
+    }
+    
+    // Update UI to show selected file
+    fileLabel.classList.add('file-selected');
+    fileLabel.classList.remove('file-error');
+    fileText.innerHTML = `<i class="fas fa-check-circle"></i> ${file.name} (${formatFileSize(file.size)})`;
+}
+
+function resetFileUpload() {
+    const fileInput = document.getElementById('chip-image');
+    const fileLabel = document.querySelector('.file-upload-label');
+    const fileText = document.getElementById('file-upload-text');
+    
+    if (fileInput) fileInput.value = '';
+    if (fileLabel) {
+        fileLabel.classList.remove('file-selected', 'file-error');
+    }
+    if (fileText) {
+        fileText.innerHTML = '<i class="fas fa-upload"></i> Upload Chip Image (JPEG, max 10MB)';
+    }
+}
+
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
 function handleSubmissionSubmit(e) {
     e.preventDefault();
     
     const form = e.target;
     const formData = new FormData(form);
+    
+    // Validate required fields
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const paperTitle = formData.get('paper_title');
+    const authors = formData.get('authors');
+    const publicationType = formData.get('publication_type');
+    const chipImage = formData.get('chip_image');
+    const message = formData.get('message');
+    
+    if (!name || !email || !paperTitle || !authors || !publicationType || !chipImage || !message) {
+        showNotification('Please fill in all required fields.', 'error');
+        return;
+    }
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showNotification('Please enter a valid email address.', 'error');
+        return;
+    }
+    
+    // Validate authors format (should contain at least one comma or be a single name)
+    if (authors.trim().length < 3) {
+        showNotification('Please provide a valid author list.', 'error');
+        return;
+    }
+    
+    // Generate automated email content
+    const emailContent = generateSubmissionEmail(formData);
     
     // Simulate form submission
     showLoading();
@@ -393,8 +485,85 @@ function handleSubmissionSubmit(e) {
     setTimeout(() => {
         hideLoading();
         showNotification('Submission inquiry sent! We\'ll review your work and contact you soon.', 'success');
+        
+        // Show the generated email content for demonstration
+        console.log('Generated Email Content:', emailContent);
+        
+        // Reset form and file upload
         form.reset();
+        resetFileUpload();
     }, 1500);
+}
+
+function generateSubmissionEmail(formData) {
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const paperTitle = formData.get('paper_title');
+    const authors = formData.get('authors');
+    const publicationType = formData.get('publication_type');
+    const chipImage = formData.get('chip_image');
+    const message = formData.get('message');
+    
+    const currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    return {
+        to: 'admin@ddhgallery.com', // Admin email address
+        from: email,
+        subject: `New Gallery Submission: ${paperTitle}`,
+        body: `
+New Gallery Submission Received
+
+Submission Details:
+==================
+Date: ${currentDate}
+Submitter: ${name}
+Email: ${email}
+
+Paper Information:
+==================
+Title: ${paperTitle}
+Authors: ${authors}
+Publication Type: ${publicationType.charAt(0).toUpperCase() + publicationType.slice(1)}
+
+Attached Files:
+===============
+Chip Image: ${chipImage.name} (${formatFileSize(chipImage.size)})
+
+Message from Submitter:
+======================
+${message}
+
+Next Steps:
+===========
+1. Review the submission details above
+2. Download and examine the attached chip image
+3. Verify the publication information
+4. Contact the submitter at ${email} with approval/feedback
+5. If approved, add the item to the gallery with "featured" or "normal" status
+
+Submission ID: SUB-${Date.now()}
+        `.trim(),
+        
+        // Metadata for processing
+        metadata: {
+            submissionId: `SUB-${Date.now()}`,
+            submitterName: name,
+            submitterEmail: email,
+            paperTitle: paperTitle,
+            authors: authors,
+            publicationType: publicationType,
+            fileName: chipImage.name,
+            fileSize: chipImage.size,
+            submissionDate: new Date().toISOString(),
+            status: 'pending_review'
+        }
+    };
 }
 
 function showLoading() {
