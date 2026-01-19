@@ -1,16 +1,15 @@
-# DDH Gallery
+# DDH Gallery - Public Website
 
-A modern, responsive gallery website for showcasing chip designs and research publications.
+A secure, view-only gallery website for showcasing chip designs and research publications.
 
 ## 🌟 Features
 
 - **Interactive Gallery**: Browse chip designs with search and filter functionality
-- **User Authentication**: Sign up/sign in system with user profiles
-- **Upload System**: Users can submit their own chip designs for review
-- **Admin Management**: Admin approval workflow for submissions
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
 - **Publication Types**: Support for conferences, journals, and ArXiv papers
 - **Category Management**: Organize chips by AI, Processors, Memory, etc.
+- **Contact System**: Direct contact forms for inquiries and submissions
+- **Secure Design**: No user authentication or data storage - completely safe for public deployment
 
 ## 🚀 Live Demo
 
@@ -21,38 +20,27 @@ Visit the live website: [DDH Gallery](https://funkyyue.github.io/ddhgallery-publ
 The website features a clean, modern design with:
 - Hero section with call-to-action
 - Searchable and filterable gallery grid
-- User authentication modal
-- Upload form for new submissions
-- Admin management interface
+- Submission guidelines and contact forms
 - Contact page with team information
+- Fully responsive layout
 
 ## 🛠️ Technology Stack
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **Styling**: Custom CSS with responsive design
 - **Icons**: Font Awesome
-- **Storage**: LocalStorage for demo data persistence
 - **Deployment**: GitHub Pages
+- **Security**: No authentication, no data storage, view-only design
 
 ## 🏗️ Project Structure
 
 ```
-├── index.html          # Main gallery page
-├── upload.html         # Upload form page
-├── profile.html        # User profile page
-├── manage.html         # Admin management page
-├── admin.html          # Admin dashboard
-├── edit-item.html      # Edit gallery item page
+├── index.html          # Main gallery page (single-page application)
 ├── styles/
 │   ├── main.css        # Main stylesheet
-│   └── admin.css       # Admin-specific styles
+│   └── admin.css       # Legacy admin styles (unused)
 ├── js/
-│   ├── main.js         # Core functionality
-│   ├── upload.js       # Upload form logic
-│   ├── profile.js      # Profile management
-│   ├── manage.js       # Admin management
-│   ├── admin.js        # Admin dashboard
-│   └── edit-item.js    # Item editing
+│   └── main.js         # Core functionality (secure, view-only)
 └── .github/
     └── workflows/
         └── deploy.yml  # GitHub Pages deployment
@@ -92,25 +80,28 @@ The website is automatically deployed to GitHub Pages when changes are pushed to
 - Browse the gallery of chip designs
 - Use search and filters to find specific papers
 - View publication details and links
+- Contact the team for inquiries
 
-### For Users
-- Sign up for an account
-- Upload your own chip designs
-- Manage your profile and submissions
-- Edit or hide your uploaded items
+### For Researchers
+- Submit your work through the contact form
+- Follow submission guidelines for inclusion
+- All submissions are manually reviewed
+- Contact directly for fastest response
 
-### For Administrators
-- Review and approve user submissions
-- Manage all gallery items
-- Add/remove publication types and categories
-- Access admin dashboard for site management
+## 🔒 Security Features
 
-## 🔧 Configuration
+- **No User Authentication**: Completely eliminates credential security risks
+- **No Data Storage**: No localStorage or cookies used for sensitive data
+- **View-Only Design**: Users cannot modify or upload content directly
+- **Contact-Based Submissions**: All submissions handled through secure contact forms
+- **No Admin Interface**: Administrative functions handled separately
 
-The website uses localStorage for data persistence in demo mode. For production use, you would typically integrate with a backend API and database.
+## 📋 Submission Process
 
-### Admin Access
-Admin features are available for demonstration purposes. In a production environment, admin authentication should be handled server-side with proper security measures.
+1. **Contact Us**: Email contact@ddhgallery.com with your research details
+2. **Include Information**: Paper title, authors, publication details, chip images
+3. **Review Process**: We'll review and add approved submissions to the gallery
+4. **Notification**: You'll be notified when your work is live
 
 ## 🤝 Contributing
 
@@ -126,10 +117,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-For questions or support, please visit the contact page on the website or reach out through the repository issues.
+For questions, submissions, or support:
+- **Email**: contact@ddhgallery.com
+- **Website**: Visit the contact page on the live site
+- **Issues**: Use GitHub issues for technical problems
 
 ## 🙏 Acknowledgments
 
 - Font Awesome for icons
 - Placeholder images from placeholder.com
 - Modern CSS techniques and responsive design patterns
+- Security-first design principles
+
+---
+
+**Note**: This is the public, secure version of the DDH Gallery. For development and administrative functions, a separate private repository is maintained with appropriate security measures.

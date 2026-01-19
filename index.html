@@ -18,28 +18,7 @@
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#gallery" class="nav-link">Gallery</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <a href="#" class="nav-link upload-btn" id="upload-nav-link">Upload</a>
-                <div class="user-menu" id="user-menu" style="display: none;">
-                    <div class="user-dropdown">
-                        <button class="user-dropdown-btn" id="user-dropdown-btn">
-                            <span id="user-name">Welcome, User</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="user-dropdown-menu" id="user-dropdown-menu">
-                            <a href="#" class="dropdown-item" id="profile-link">
-                                <i class="fas fa-user"></i> Profile
-                            </a>
-                            <a href="#" class="dropdown-item" id="upload-link">
-                                <i class="fas fa-upload"></i> Upload
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item" id="signout-link">
-                                <i class="fas fa-sign-out-alt"></i> Sign Out
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <a href="#" class="nav-link" id="auth-link">Sign In</a>
+                <a href="#submit" class="nav-link">Submit Work</a>
             </div>
             <div class="nav-toggle" id="nav-toggle">
                 <span class="bar"></span>
@@ -103,6 +82,67 @@
         </div>
     </section>
 
+    <!-- Submit Work Section -->
+    <section id="submit" class="submit-section">
+        <div class="container">
+            <h2>Submit Your Research</h2>
+            <div class="submit-content">
+                <div class="submit-info">
+                    <h3>Share Your Work</h3>
+                    <p>We welcome submissions of chip research and publications from researchers worldwide. To submit your work for inclusion in the DDH Gallery, please contact us directly.</p>
+                    
+                    <div class="submission-guidelines">
+                        <h4>Submission Guidelines:</h4>
+                        <ul>
+                            <li>Original research in chip design, architecture, or related fields</li>
+                            <li>Published or accepted papers from conferences, journals, or ArXiv</li>
+                            <li>High-quality chip images or diagrams</li>
+                            <li>Complete author information and publication details</li>
+                            <li>Permission to display the work publicly</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="submission-process">
+                        <h4>How to Submit:</h4>
+                        <ol>
+                            <li>Email us at <strong>contact@ddhgallery.com</strong></li>
+                            <li>Include your paper details and chip images</li>
+                            <li>We'll review and add your work to the gallery</li>
+                            <li>You'll be notified once your submission is live</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="submit-form">
+                    <h3>Quick Contact for Submissions</h3>
+                    <form id="submission-form">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="paper_title" placeholder="Paper Title" required>
+                        </div>
+                        <div class="form-group">
+                            <select name="publication_type" required>
+                                <option value="">Select Publication Type</option>
+                                <option value="conference">Conference</option>
+                                <option value="journal">Journal</option>
+                                <option value="arxiv">ArXiv</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Brief description of your work and submission details..." rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Submission Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
         <div class="container">
@@ -146,49 +186,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="auth-container">
-                <div class="auth-tabs">
-                    <button class="auth-tab active" data-tab="signin">Sign In</button>
-                    <button class="auth-tab" data-tab="signup">Sign Up</button>
-                </div>
-                <div id="signin-form" class="auth-form active">
-                    <h3>Sign In</h3>
-                    <form>
-                        <div class="form-group">
-                            <input type="email" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password" placeholder="Password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sign In</button>
-                    </form>
-                </div>
-                <div id="signup-form" class="auth-form">
-                    <h3>Sign Up</h3>
-                    <form>
-                        <div class="form-group">
-                            <input type="text" name="name" placeholder="Full Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password" placeholder="Password" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="footer">
