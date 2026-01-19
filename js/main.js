@@ -380,14 +380,87 @@ function handleContactSubmit(e) {
     const form = e.target;
     const formData = new FormData(form);
     
+    // Validate required fields
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
+    
+    if (!name || !email || !message) {
+        showNotification('Please fill in all required fields.', 'error');
+        return;
+    }
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showNotification('Please enter a valid email address.', 'error');
+        return;
+    }
+    
+    // Generate automated email content for contact form
+    const emailContent = generateContactEmail(formData);
+    
     // Simulate form submission
     showLoading();
     
     setTimeout(() => {
         hideLoading();
         showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+        
+        // Show the generated email content for demonstration
+        console.log('Generated Contact Email:', emailContent);
+        
         form.reset();
     }, 1500);
+}
+
+function generateContactEmail(formData) {
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
+    
+    const currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    return {
+        to: 'contact@ddhgallery.com', // Admin contact email
+        from: email,
+        subject: `Contact: ${name} - DDH Gallery Inquiry`,
+        body: `
+New Contact Message Received
+
+Contact Details:
+===============
+Date: ${currentDate}
+Name: ${name}
+Email: ${email}
+
+Message:
+========
+${message}
+
+Response Required:
+=================
+Please respond to ${name} at ${email} regarding their inquiry.
+
+Contact ID: CONTACT-${Date.now()}
+        `.trim(),
+        
+        // Metadata for processing
+        metadata: {
+            contactId: `CONTACT-${Date.now()}`,
+            senderName: name,
+            senderEmail: email,
+            contactDate: new Date().toISOString(),
+            messageType: 'general_inquiry',
+            status: 'pending_response'
+        }
+    };
 }
 
 function handleFileUpload(e) {
@@ -454,11 +527,10 @@ function handleSubmissionSubmit(e) {
     const email = formData.get('email');
     const paperTitle = formData.get('paper_title');
     const authors = formData.get('authors');
-    const publicationType = formData.get('publication_type');
     const chipImage = formData.get('chip_image');
     const message = formData.get('message');
     
-    if (!name || !email || !paperTitle || !authors || !publicationType || !chipImage || !message) {
+    if (!name || !email || !paperTitle || !authors || !chipImage || !message) {
         showNotification('Please fill in all required fields.', 'error');
         return;
     }
@@ -500,7 +572,6 @@ function generateSubmissionEmail(formData) {
     const email = formData.get('email');
     const paperTitle = formData.get('paper_title');
     const authors = formData.get('authors');
-    const publicationType = formData.get('publication_type');
     const chipImage = formData.get('chip_image');
     const message = formData.get('message');
     
@@ -529,7 +600,6 @@ Paper Information:
 ==================
 Title: ${paperTitle}
 Authors: ${authors}
-Publication Type: ${publicationType.charAt(0).toUpperCase() + publicationType.slice(1)}
 
 Attached Files:
 ===============
@@ -557,7 +627,6 @@ Submission ID: SUB-${Date.now()}
             submitterEmail: email,
             paperTitle: paperTitle,
             authors: authors,
-            publicationType: publicationType,
             fileName: chipImage.name,
             fileSize: chipImage.size,
             submissionDate: new Date().toISOString(),
